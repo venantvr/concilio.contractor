@@ -36,7 +36,6 @@ class contractor extends Contract
     public function log($title, $message)
     {
         $this->message = PHP_EOL . $_COOKIE['PHPSESSID'] . PHP_EOL . $title . PHP_EOL . var_export($message, true);
-
         write_log($this->message);
 
         return Contractor::get();
@@ -54,7 +53,7 @@ class contractor extends Contract
             }
         }
 
-        return $this;
+        return Contractor::get();
     }
 
     public static function requires($condition, $args = array())
@@ -68,7 +67,7 @@ class contractor extends Contract
             }
         }
 
-        return $this;
+        return Contractor::get();
     }
 }
 
