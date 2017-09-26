@@ -18,7 +18,7 @@ if (!function_exists('write_log')) {
     }
 }
 
-class Contractor extends Contract
+class contractor extends Contract
 {
     public $message;
 
