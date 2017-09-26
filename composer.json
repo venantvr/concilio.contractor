@@ -1,7 +1,7 @@
 {
     "name": "concilio/contractor",
     "type": "library",
-    "description": "A library which helps to specify, check and reflect code contracts.",
+    "description": "Based on hediet/contracts. A library which helps to specify, check and reflect code contracts. Fast porting for wordpress. An additional layer simply makes it possible to invalidate the exceptions in a production context.",
     "keywords": ["code", "contract", "assert", "assertion", "validation", "argument", "exception", "precondition", "invariant"],
     "authors": [
         {
