@@ -11,7 +11,7 @@
         }
     ],
     "support": {
-        "email": "renald@concilio.com",
+        "email": "renald@concilio.com"
     },
     "autoload": {
         "psr-0": { "concilio" : "src/"}
