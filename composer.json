@@ -1,0 +1,23 @@
+{
+    "name": "concilio/contractor",
+    "type": "library",
+    "description": "A library which helps to specify, check and reflect code contracts.",
+    "keywords": ["code", "contract", "assert", "assertion", "validation", "argument", "exception", "precondition", "invariant"],
+    "authors": [
+        {
+            "name": "Rénald VENANT-VALERY",
+            "email": "renald@concilio.com",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "renald@concilio.com",
+    },
+    "autoload": {
+        "psr-0": { "concilio" : "src/"}
+    },   
+    "require": {
+        "php": ">=5.3.0",
+        "hediet/contracts": "^0.1.0"
+    }
+}
