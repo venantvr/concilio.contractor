@@ -20,9 +20,22 @@ if (!function_exists('write_log')) {
 
 class contractor extends Contract
 {
+    private static $instance = null;
     public $message;
 
-    private static $instance = null;
+    public function log($title, $message)
+    {
+        $this->message = 'cookie : ' . $_COOKIE['PHPSESSID'] . ',        object : ' . $title . ',        message : ' . var_export($message, true);
+        $this->write();
+
+        return contractor::get();
+    }
+
+    private function write()
+    {
+        write_log($this->message);
+        var_dump($this->message);
+    }
 
     public static function get()
     {
@@ -33,23 +46,14 @@ class contractor extends Contract
         return self::$instance;
     }
 
-    public function log($title, $message)
-    {
-        $this->message = 'cookie : ' . $_COOKIE['PHPSESSID'] . ',        object : ' . $title . ',        message : ' . var_export($message, true);
-        write_log($this->message);
-
-        return contractor::get();
-    }
-
-    public static function evaluate($function, $args = array())
+    public function evaluate($function, $args = array())
     {
         if (true === WP_DEBUG) {
             try {
                 $result = call_user_func($function);
                 return parent::requires($result, array_merge($args, array($this->message)));
             } catch (Exception $ex) {
-                write_log($this->message);
-                var_dump($this->message);
+                $this->write();
                 throw $ex;
             }
         }
@@ -57,23 +61,22 @@ class contractor extends Contract
         return contractor::get();
     }
 
-    public static function requires($condition, $args = array())
+    public function throw()
+    {
+        return self::requires(false);
+    }
+
+    public function requires($condition, $args = array())
     {
         if (true === WP_DEBUG) {
             try {
                 return parent::requires($condition, array_merge($args, array($this->message)));
             } catch (Exception $ex) {
-                write_log($this->message);
-                var_dump($this->message);
+                $this->write();
                 throw $ex;
             }
         }
 
         return contractor::get();
-    }
-
-    public static function throw()
-    {
-        return requires(false);
     }
 }
