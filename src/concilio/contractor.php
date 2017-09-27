@@ -23,18 +23,23 @@ class contractor extends Contract
     private static $instance = null;
     public $message;
 
-    public function log($title, $message)
+    public static function log($title, $message)
     {
-        $this->message = 'cookie : ' . $_COOKIE['PHPSESSID'] . ',        object : ' . $title . ',        message : ' . var_export($message, true);
-        $this->write();
+        self::/*$this->*/
+        $message = 'cookie : ' . $_COOKIE['PHPSESSID'] . ',        object : ' . $title . ',        message : ' . var_export($message, true);
+        self::/*$this->*/
+        write();
 
-        return contractor::get();
+        return self/*contractor*/
+        ::get();
     }
 
-    private function write()
+    private static function write()
     {
-        write_log($this->message);
-        var_dump($this->message);
+        write_log(self::/*$this->*/
+        $message);
+        var_dump(self::/*$this->*/
+        $message);
     }
 
     public static function get()
@@ -46,37 +51,41 @@ class contractor extends Contract
         return self::$instance;
     }
 
-    public function evaluate($function, $args = array())
+    public static function evaluate($function, $args = array())
     {
         if (true === WP_DEBUG) {
             try {
                 $result = call_user_func($function);
-                return parent::requires($result, array_merge($args, array($this->message)));
+                return parent::requires($result, array_merge($args, array(self::/*$this->*/
+                $message)));
             } catch (Exception $ex) {
-                $this->write();
+                write();
                 throw $ex;
             }
         }
 
-        return contractor::get();
+        return self/*contractor*/
+        ::get();
     }
 
-    public function throw()
-    {
-        return self::requires(false);
-    }
-
-    public function requires($condition, $args = array())
+    public static function requires($condition, $args = array())
     {
         if (true === WP_DEBUG) {
             try {
-                return parent::requires($condition, array_merge($args, array($this->message)));
+                return parent::requires($condition, array_merge($args, array(self::/*$this->*/
+                $message)));
             } catch (Exception $ex) {
-                $this->write();
+                write();
                 throw $ex;
             }
         }
 
-        return contractor::get();
+        return self/*contractor*/
+        ::get();
+    }
+
+    public static function throw()
+    {
+        return requires(false);
     }
 }
