@@ -27,7 +27,7 @@ class contractor extends Contract
     public static function get()
     {
         if (self::$instance == null) {
-            self::$instance = new Contractor();
+            self::$instance = new contractor();
         }
 
         return self::$instance;
@@ -38,7 +38,7 @@ class contractor extends Contract
         $this->message = PHP_EOL . $_COOKIE['PHPSESSID'] . PHP_EOL . $title . PHP_EOL . var_export($message, true);
         write_log($this->message);
 
-        return Contractor::get();
+        return contractor::get();
     }
 
     public static function evaluate($function, $args = array())
@@ -53,7 +53,7 @@ class contractor extends Contract
             }
         }
 
-        return Contractor::get();
+        return contractor::get();
     }
 
     public static function requires($condition, $args = array())
@@ -67,7 +67,6 @@ class contractor extends Contract
             }
         }
 
-        return Contractor::get();
+        return contractor::get();
     }
 }
-
