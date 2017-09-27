@@ -46,8 +46,9 @@ class contractor extends Contract
         if (true === WP_DEBUG) {
             try {
                 $result = call_user_func($function);
-                return parent::requires($result, $args);
+                return parent::requires($result, array_merge($args, array($this->message)));
             } catch (Exception $ex) {
+                write_log($this->message);
                 var_dump($this->message);
                 throw $ex;
             }
@@ -60,13 +61,19 @@ class contractor extends Contract
     {
         if (true === WP_DEBUG) {
             try {
-                return parent::requires($condition, $args);
+                return parent::requires($condition, array_merge($args, array($this->message)));
             } catch (Exception $ex) {
+                write_log($this->message);
                 var_dump($this->message);
                 throw $ex;
             }
         }
 
         return contractor::get();
+    }
+
+    public static function throw()
+    {
+        return requires(false);
     }
 }
