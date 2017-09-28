@@ -20,26 +20,26 @@ if (!function_exists('write_log')) {
 
 class contractor extends Contract
 {
-    private static $instance = null;
-    public $message;
+    private $instance = null;
+    private $message = null;
 
-    public static function log($title, $message)
+    private function __construct()
     {
-        self::/*$this->*/
-        $message = 'cookie : ' . $_COOKIE['PHPSESSID'] . ',        object : ' . $title . ',        message : ' . var_export($message, true);
-        self::/*$this->*/
-        write();
 
-        return self/*contractor*/
-        ::get();
     }
 
-    private static function write()
+    public function log($title, $message)
     {
-        write_log(self::/*$this->*/
-        $message);
-        var_dump(self::/*$this->*/
-        $message);
+        $this->message = 'cookie : ' . $_COOKIE['PHPSESSID'] . ',        object : ' . $title . ',        message : ' . var_export($message, true);
+        $this->write();
+
+        return contractor::get();
+    }
+
+    private function write()
+    {
+        write_log($this->message);
+        var_dump($this->message);
     }
 
     public static function get()
@@ -51,40 +51,36 @@ class contractor extends Contract
         return self::$instance;
     }
 
-    public static function evaluate($function, $args = array())
+    public function evaluate($function, $args = array())
     {
         if (true === WP_DEBUG) {
             try {
                 $result = call_user_func($function);
-                return parent::requires($result, array_merge($args, array(self::/*$this->*/
-                $message)));
+                return parent::requires($result, array_merge($args, array($this->message)));
             } catch (Exception $ex) {
                 write();
                 throw $ex;
             }
         }
 
-        return self/*contractor*/
-        ::get();
+        return contractor::get();
     }
 
-    public static function requires($condition, $args = array())
+    public function requires($condition, $args = array())
     {
         if (true === WP_DEBUG) {
             try {
-                return parent::requires($condition, array_merge($args, array(self::/*$this->*/
-                $message)));
+                return parent::requires($condition, array_merge($args, array($this->message)));
             } catch (Exception $ex) {
                 write();
                 throw $ex;
             }
         }
 
-        return self/*contractor*/
-        ::get();
+        return contractor::get();
     }
 
-    public static function throw()
+    public function throw()
     {
         return requires(false);
     }
