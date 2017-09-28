@@ -28,29 +28,6 @@ class contractor extends Contract
 
     }
 
-    public function log($title, $message)
-    {
-        $this->message = 'cookie : ' . $_COOKIE['PHPSESSID'] . ',        object : ' . $title . ',        message : ' . var_export($message, true);
-        $this->write();
-
-        return contractor::get();
-    }
-
-    private function write()
-    {
-        write_log($this->message);
-        var_dump($this->message);
-    }
-
-    public static function get()
-    {
-        if (self::$instance == null) {
-            self::$instance = new contractor();
-        }
-
-        return self::$instance;
-    }
-
     public function evaluate($function, $args = array())
     {
         if (true === WP_DEBUG) {
@@ -66,7 +43,16 @@ class contractor extends Contract
         return contractor::get();
     }
 
-    public function requires($condition, $args = array())
+    public static function get()
+    {
+        if (self::$instance == null) {
+            self::$instance = new contractor();
+        }
+
+        return self::$instance;
+    }
+
+    public function require ($condition, $args = array())
     {
         if (true === WP_DEBUG) {
             try {
@@ -83,5 +69,19 @@ class contractor extends Contract
     public function throw()
     {
         return requires(false);
+    }
+
+    public function log($title, $message)
+    {
+        $this->message = 'cookie : ' . $_COOKIE['PHPSESSID'] . ',        object : ' . $title . ',        message : ' . var_export($message, true);
+        $this->write();
+
+        return contractor::get();
+    }
+
+    private function write()
+    {
+        write_log($this->message);
+        var_dump($this->message);
     }
 }
