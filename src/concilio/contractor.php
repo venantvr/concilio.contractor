@@ -20,7 +20,7 @@ if (!function_exists('write_log')) {
 
 class contractor extends Contract
 {
-    private $instance = null;
+    private static $instance = null;
     private $message = null;
 
     private function __construct()
@@ -52,7 +52,7 @@ class contractor extends Contract
         return self::$instance;
     }
 
-    public function require ($condition, $args = array())
+    public function assert($condition, $args = array())
     {
         if (true === WP_DEBUG) {
             try {
