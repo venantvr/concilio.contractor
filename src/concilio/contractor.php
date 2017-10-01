@@ -22,6 +22,7 @@ class contractor extends Contract
 {
     private static $instance = null;
     private $message = null;
+    private $functions = array();
 
     private function __construct()
     {
@@ -33,7 +34,7 @@ class contractor extends Contract
         if (true === WP_DEBUG) {
             try {
                 $result = call_user_func($function);
-                return parent::requires($result, array_merge($args, array($this->message)));
+                /* return */ parent::requires($result, array_merge($args, array($this->message)));
             } catch (Exception $ex) {
                 write();
                 throw $ex;
@@ -56,11 +57,31 @@ class contractor extends Contract
     {
         if (true === WP_DEBUG) {
             try {
-                return parent::requires($condition, array_merge($args, array($this->message)));
+                /* return */ parent::requires($condition, array_merge($args, array($this->message)));
             } catch (Exception $ex) {
                 write();
                 throw $ex;
             }
+        }
+
+        return contractor::get();
+    }
+
+    public function enqueue($function, $args = array())
+    {
+        $functions[] = array(
+            'expression' => $function,
+            'arguments' => $args,
+            'results' => null);
+
+        return contractor::get();
+    }
+
+    public function dequeue()
+    {
+        foreach ($functions as $function)
+        {
+            $function['results'] = $this->evaluate($function['expression'], $function['arguments']);
         }
 
         return contractor::get();
