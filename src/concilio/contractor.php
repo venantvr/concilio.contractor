@@ -89,7 +89,7 @@ class contractor extends Contract
 
     public function throw()
     {
-        return requires(false);
+        return assert(false);
     }
 
     public function log($title, $message)
