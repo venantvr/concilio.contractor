@@ -79,12 +79,9 @@ class contractor extends Contract
 
     public static function obfuscate($sensible)
     {
-        if (strlen($sensible) > 3)
-        {
+        if (strlen($sensible) > 3) {
             $data = substr($sensible, 0, 3) . '...';
-        }
-        else
-        {
+        } else {
             $data = $sensible;
         }
 
