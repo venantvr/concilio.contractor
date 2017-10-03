@@ -77,6 +77,20 @@ class contractor extends Contract
         return contractor::get();
     }
 
+    public static function obfuscate($sensible)
+    {
+        if (strlen($sensible) > 3)
+        {
+            $data = substr($sensible, 0, 3) . '...';
+        }
+        else
+        {
+            $data = $sensible;
+        }
+
+        return $data;
+    }
+
     public function dequeue()
     {
         foreach ($functions as $function)
